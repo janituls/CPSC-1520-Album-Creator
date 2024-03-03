@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Album Creator</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .invalid-feedback {
+      display: none;
+    }
+    .is-invalid {
+      border: 1px solid red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <header>
+        <h1>Album Creator</h1>
+    </header>
+
+    <form id="albumForm">
+        <div class="form-group">
+          <label for="albumTitle">Album Title</label>
+          <input type="text" class="form-control" id="albumTitle" placeholder="Enter album title">
+          <div class="invalid-feedback">Album title must be between 1 and 10 characters.</div>
+        </div>
+        <div class="form-group">
+          <label for="albumDescription">Album Description</label>
+          <input type="text" class="form-control" id="albumDescription" placeholder="Enter album description">
+          <div class="invalid-feedback">Album description must be between 1 and 30 characters.</div>
+        </div>
+        <div class="form-group">
+          <label for="albumArt">Album Art</label>
+          <select class="form-control" id="albumArt">
+            <option value="">Select album art</option>
+            <option value="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">Cassette</option>
+            <option value="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">Gazing at Stars</option>
+            <option value="https://unsplash.com/photos/wKlHsooRhttps://images.unsplash.com/photo-1578301978018-3005759f48f7?q=80&w=2044&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3DVbg">Mountains</option>
+            <option value="https://images.unsplash.com/photo-1509281373149-e957c6296406?q=80&w=1928&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">TV</option>
+          </select>
+          <div class="invalid-feedback">Please select an album art.</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Album Card</button>
+      </form>
+  
+      <div class="mt-5" id="container">
+        
+      </div>
+    </div>
+  
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+    <script>
+      $(document).ready(function(){
+        $('#albumForm').submit(function(e){
+          e.preventDefault();
+  
+          var title = $('#albumTitle').val();
+          var description = $('#albumDescription').val();
+          var art = $('#albumArt').val();
+  
+          $('.form-control').removeClass('is-invalid');
+          $('.invalid-feedback').hide();
+  
+          if(title.length === 0 || title.length > 10) {
+            $('#albumTitle').addClass('is-invalid');
+            $('#albumTitle + .invalid-feedback').show();
+            return;
+          }
+  
+          if(description.length === 0 || description.length > 30) {
+            $('#albumDescription').addClass('is-invalid');
+            $('#albumDescription + .invalid-feedback').show();
+            return;
+          }
+  
+          if(art === '') {
+            $('#albumArt').addClass('is-invalid');
+            $('#albumArt + .invalid-feedback').show();
+            return;
+          }
+  
+          var albumCard = `
+            <div class="col">
+              <div class="card shadow-sm">
+                <img class="bd-placeholder-img card-img-top" src="${art}" />
+                <div class="card-body">
+                  <h5 class="card-title">${description}</h5>
+                  <p class="card-text">${title}</p>
+                </div>
+              </div>
+            </div>
+          `;
+  
+          $('#container').append(albumCard);
+  
+          $('#albumForm')[0].reset();
+        });
+      });
+    </script>
+  </body>
+  </html>
